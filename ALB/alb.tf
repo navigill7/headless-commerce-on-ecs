@@ -10,8 +10,8 @@ resource "aws_lb" "test" {
 }
 
 resource "aws_lb_target_group" "TG" {
-  name        = "tf-example-lb-tg"
-  port        = 6500
+  name        = "example-lb-tg"
+  port        = 9000
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
