@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "TD" {
       essential = true
       portMappings = [
         {
-          containerPort = 6500
-          hostPort      = 6500
+          containerPort = 9000
+          hostPort      = 9000
           protocol      = "tcp"
         }
       ]
