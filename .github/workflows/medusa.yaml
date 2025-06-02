@@ -1,0 +1,57 @@
+name: medusa_cicd_pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'my-medusa-store/**'
+
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+  IMAGE_TAG: ${{ github.sha }}
+  IMAGE_NAME: gillnavi/medusa-api
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        working-directory: my-medusa-store
+        run: |
+          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+          docker push $IMAGE_NAME:$IMAGE_TAG
+
+      - name: Update ECS task definition with new image tag
+        run: |
+          sed -i 's|image = ".*"|image = "'$IMAGE_NAME':'$IMAGE_TAG'"|' ECS/task_definition.tf
+
+      - name: Set up SSH access
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Commit and push changes via SSH
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin git@github.com:${{ github.repository }}.git
+          git add ECS/task_definition.tf
+          git commit -m "chore: update image tag to $IMAGE_TAG"
+          git push origin main
