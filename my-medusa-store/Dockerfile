@@ -9,6 +9,7 @@ COPY . .
 
 EXPOSE 9000
 
+
 # Copy .env into the image
 COPY .env .env
 
