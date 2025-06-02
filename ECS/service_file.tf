@@ -15,3 +15,6 @@ resource "aws_ecs_service" "medusa-cluster-service" {
     container_port   = 9000
   }
 }
+
+
+
