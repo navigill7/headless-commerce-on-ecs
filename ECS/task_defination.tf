@@ -2,8 +2,8 @@ resource "aws_ecs_task_definition" "TD" {
   family                   = "medusa-service"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = "256"
-  memory                   = "512"
+  cpu                      = "4096"
+  memory                   = "8192"
   execution_role_arn       = var.execution_role_arn
   container_definitions = jsonencode([
     {
