@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "TD" {
   container_definitions = jsonencode([
     {
       name  = "medusa"
-      image = "booraraman/easy-drive-rentals:v1.1"
+      image = "gillnavi/medusa-api:0f829deac2ddf9527b8a989271d0c1452ccac64a"
       essential = true
       portMappings = [
         {
