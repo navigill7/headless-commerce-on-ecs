@@ -39,19 +39,18 @@ jobs:
         run: |
           terraform plan -out=tfplan
 
-      - name: Wait for approval before applying changes
-        id: wait_for_approval
-        uses: trstringer/manual-approval@v1
-        with:
-            secret: ${{ github.TOKEN }}
-            approvers: navigill7  
-            minimum-approvals: 1
-            issue-title: "ECS Deployment Approval Required"
-            message: "Please approve the deployment to ECS."
-            timeout: 3600
+      # - name: Wait for approval before applying changes
+      #   id: wait_for_approval
+      #   uses: trstringer/manual-approval@v1
+      #   with:
+      #       secret: ${{ github.TOKEN }}
+      #       approvers: navigill7  
+      #       minimum-approvals: 1
+      #       issue-title: "ECS Deployment Approval Required"
+      #       message: "Please approve the deployment to ECS."
+      #       timeout: 3600
     
       - name: Apply Terraform changes
-        if: steps.wait_for_approval.outputs.approved == 'true'
         run: |
           terraform apply -auto-approve tfplan      
     
