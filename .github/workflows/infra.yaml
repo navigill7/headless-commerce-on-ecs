@@ -28,7 +28,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.8.4
+          terraform_version: 1.8.7
 
       - name: Initialize Terraform
         run: |
@@ -39,10 +39,10 @@ jobs:
         run: |
           terraform plan -out=tfplan
 
-          - name: Wait for approval before applying changes
-          id: wait_for_approval
-          uses: trstringer/manual-approval@v1
-          with:
+      - name: Wait for approval before applying changes
+        id: wait_for_approval
+        uses: trstringer/manual-approval@v1
+        with:
             secret: ${{ github.TOKEN }}
             approvers: navigill7  
             minimum-approvals: 1
