@@ -38,7 +38,7 @@ jobs:
 
       - name: Update ECS task definition with new image tag
         run: |
-          sed -i 's|image = ".*"|image = "'$IMAGE_NAME':'$IMAGE_TAG'"|' ECS/task_definition.tf
+          sed -i 's|image = ".*"|image = "'$IMAGE_NAME':'$IMAGE_TAG'"|' ECS/task_defination.tf
 
       - name: Set up SSH access
         run: |
