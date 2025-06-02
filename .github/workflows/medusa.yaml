@@ -52,6 +52,6 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git remote set-url origin git@github.com:${{ github.repository }}.git
-          git add ECS/task_definition.tf
+          git add ECS/task_defination.tf
           git commit -m "chore: update image tag to $IMAGE_TAG"
           git push origin main
