@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "TD" {
   container_definitions = jsonencode([
     {
       name  = "medusa"
-      image = "gillnavi/medusa-api:0f829deac2ddf9527b8a989271d0c1452ccac64a"
+      image = "gillnavi/medusa-api:1b0f71636551781417571c3dfa85b10f759d7aaf"
       essential = true
       portMappings = [
         {
