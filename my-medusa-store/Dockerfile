@@ -14,4 +14,5 @@ COPY .env .env
 
 ENV NODE_ENV=development
 
+
 CMD ["npm", "run", "dev"]
