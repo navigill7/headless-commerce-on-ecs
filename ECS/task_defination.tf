@@ -33,3 +33,9 @@ resource "aws_ecs_task_definition" "TD" {
     create_before_destroy = true
   }
 }
+
+
+
+
+
+
